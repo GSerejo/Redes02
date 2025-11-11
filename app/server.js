@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const { createClient } = require('redis');
-const RedisStore = require('connect-redis');
+const RedisStore = require('connect-redis').default;
 const os = require('os');
 const { Pool } = require('pg');
 

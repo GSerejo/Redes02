@@ -1,0 +1,15 @@
+$TTL    60
+@       IN      SOA     ns.meutrabalho.com.br. root.meutrabalho.com.br. (
+                    1       ; Serial
+                    60      ; Refresh
+                    60      ; Retry
+                    60      ; Expire
+                    60 )    ; Negative Cache TTL
+;
+@       IN      NS      ns.meutrabalho.com.br.
+ns      IN      A       127.0.0.1
+
+; REQUISITO CUMPRIDO: Round Robin para www
+www     IN      A       127.0.0.1
+www     IN      A       127.0.0.2
+www     IN      A       127.0.0.3

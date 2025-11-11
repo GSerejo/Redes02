@@ -1,0 +1,38 @@
+graph TD
+    subgraph "Sua Máquina (Host)"
+        Browser[<font size=2>Browser</font>]
+        
+        subgraph "Interface de Loopback"
+            IP1(127.0.0.1)
+            IP2(127.0.0.2)
+            IP3(127.0.0.3)
+        end
+
+        subgraph "Containers Docker"
+            DNS[<b>Servidor DNS</b><br><font size=1>BIND9 @ 127.0.0.1:53</font>]
+            
+            App1[<b>App Server 1</b><br><font size=1>Node.js</font>]
+            App2[<b>App Server 2</b><br><font size=1>Node.js</font>]
+            App3[<b>App Server 3</b><br><font size=1>Node.js</font>]
+
+            Redis[<b>Session Store</b><br><font size=1>Redis</font>]
+            DB[(<b>Database</b><br><font size=1>PostgreSQL</font>)]
+        end
+
+        Browser -- 1. DNS Query<br>www.meutrabalho.com.br --> DNS
+        DNS -- 2. DNS Response<br>(ex: 127.0.0.2) --> Browser
+        
+        Browser -- 3. HTTP Request --> IP2
+
+        IP1 <.. Port 80 ..> App1
+        IP2 <== Port 80 ==> App2
+        IP3 <.. Port 80 ..> App3
+
+        App1 -- Lê/Escreve Sessão --> Redis
+        App2 -- Lê/Escreve Sessão --> Redis
+        App3 -- Lê/Escreve Sessão --> Redis
+
+        App1 -- Lê Usuário --> DB
+        App2 -- Lê Usuário --> DB
+        App3 -- Lê Usuário --> DB
+    end

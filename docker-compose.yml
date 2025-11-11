@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # --- Servidor DNS (1) ---
+  dns-server:
+    build: ./dns
+    ports:
+      # Mapeia a porta 53 (DNS) do container para 127.0.0.1:53 da sua máquina
+      - "127.0.0.1:53:53/udp"
+      - "127.0.0.1:53:53/tcp"
+    networks:
+      - trabalho-net
+
+  # --- Servidores de Aplicação (3) ---
+  app-server-1:
+    build: ./app
+    hostname: app-server-1
+    ports:
+      # Mapeia a porta 3000 (app) para 127.0.0.1:80 da sua máquina
+      - "127.0.0.1:80:3000"
+    networks:
+      - trabalho-net
+    depends_on:
+      - db-server
+      - session-store
+
+  app-server-2:
+    build: ./app
+    hostname: app-server-2
+    ports:
+      # Mapeia a porta 3000 (app) para 127.0.0.2:80 da sua máquina
+      - "127.0.0.2:80:3000"
+    networks:
+      - trabalho-net
+    depends_on:
+      - db-server
+      - session-store
+
+  app-server-3:
+    build: ./app
+    hostname: app-server-3
+    ports:
+      # Mapeia a porta 3000 (app) para 127.0.0.3:80 da sua máquina
+      - "127.0.0.3:80:3000"
+    networks:
+      - trabalho-net
+    depends_on:
+      - db-server
+      - session-store
+
+  # --- Servidor de Sessão (1) ---
+  session-store:
+    image: redis:7-alpine
+    hostname: session-store
+    networks:
+      - trabalho-net
+
+  # --- Servidor de Banco de Dados (1) ---
+  db-server:
+    image: postgres:14-alpine
+    hostname: db-server
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: appdb
+    volumes:
+      # Roda o script de inicialização do banco
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - trabalho-net
+
+networks:
+  trabalho-net:

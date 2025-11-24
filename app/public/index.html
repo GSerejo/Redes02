@@ -1,17 +1,184 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head><title>Trabalho Redes</title></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Distribuídos | Trabalho Redes</title>
+    <style>
+        /* --- Reset Básico --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* Fundo com degradê moderno */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        /* --- O Cartão com Efeito de Vidro --- */
+        .container {
+            background: rgba(255, 255, 255, 0.1); /* Branco transparente */
+            backdrop-filter: blur(10px); /* O desfoque mágico */
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            width: 400px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+
+        /* --- Formulários e Inputs --- */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- Botões --- */
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            margin-top: 10px;
+        }
+
+        button[type="submit"] {
+            background: #00d2ff;
+            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+            color: white;
+        }
+
+        #getProfile {
+            background: #f857a6;
+            background: linear-gradient(90deg, #f857a6 0%, #ff5858 100%);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* --- Área de Perfil --- */
+        .profile-section {
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            color: #00ffca; /* Cor estilo terminal hacker */
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            white-space: pre-wrap; /* Quebra linha se for muito longo */
+        }
+        
+        .divider {
+            margin: 20px 0;
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0));
+        }
+    </style>
+</head>
 <body>
-    <h2>Login</h2>
-    <form id="loginForm">
-        <input type="text" id="username" placeholder="user1" required><br>
-        <input type="password" id="password" placeholder="pass1" required><br>
-        <button type="submit">Login</button>
-    </form>
-    <hr>
-    <h2>Meu Perfil (Protegido)</h2>
-    <button id="getProfile">Ver Perfil</button>
-    <pre id="profileData"></pre>
+
+    <div class="container">
+        <h1>Trabalho de Redes</h1>
+        <br>
+        
+        <div class="login-section">
+            <h2>🔒 Acesso Restrito</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" placeholder="Ex: user1" required autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="Ex: pass1" required>
+                </div>
+                <button type="submit">ENTRAR</button>
+            </form>
+        </div>
+
+        <hr class="divider">
+
+        <div class="profile-section">
+            <h2>👤 Área Logada</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 10px; opacity: 0.8;">
+                Clique abaixo para testar o balanceamento e a persistência de sessão.
+            </p>
+            <button id="getProfile">VER MEU PERFIL</button>
+            
+            <pre id="profileData">Aguardando requisição...</pre>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>

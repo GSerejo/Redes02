@@ -1,0 +1,16 @@
+options {
+    directory "/var/cache/bind";
+
+    // Desabilita o IPv6
+    listen-on-v6 { none; };
+
+    // Encaminha consultas que não são "meutrabalho.com.br"
+    // para os DNS do Google (usando IPv4)
+    forwarders {
+        8.8.8.8;
+        8.8.4.4;
+    };
+    forward only;
+
+    allow-query { any; };
+};
